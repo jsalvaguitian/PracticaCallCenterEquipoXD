@@ -1,5 +1,9 @@
 package ar.edu.unlam.pb2.equipo;
 
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
+
 public class Contacto {
 	private String nombreyapellido;
 	private String email;
@@ -9,6 +13,7 @@ public class Contacto {
 	private Provincia provincia;
 	private boolean esCliente = false;
 	private boolean deseaSerLlamadoNuevamente = true;
+	private Map<Integer, Contacto> llamadas;
 	/*
 	 * Se deben incorporar los atributos necesarios.
 	 * 
@@ -40,13 +45,17 @@ public class Contacto {
 		this.provincia = provincia;
 		this.esCliente = esCliente;
 		this.deseaSerLlamadoNuevamente = deseaSerLlamadoNuevamente;
+		this.llamadas = new TreeMap<Integer, Contacto>();
 	}
 
-	public boolean registrarNuevaLlamada(Llamada nueva) {
-		/*
-		 * Registra una nueva llamada asociada al contacto actual.
-		 */
-		return false;
+	public void registrarNuevaLlamada(Llamada llamada, Contacto contacto) {
+		llamadas.put(llamada.getId(), contacto);
+	}
+	
+	public void verRegistroDeLlamadas() {
+	for (Entry<Integer, Contacto> entry : llamadas.entrySet()) {
+	    System.out.println("llamada numero " + entry.getKey() + ":" + entry.getValue().getNombreyapellido());
+	}
 	}
 	
 	@Override
@@ -120,5 +129,9 @@ public class Contacto {
 		this.deseaSerLlamadoNuevamente = deseaSerLlamadoNuevamente;
 	}
 	
+	public Integer getNumeroDeLlamadasRegistradas() {
+		return llamadas.size();
 
+	
+	}
 }
